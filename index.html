@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOB Calculator</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            text-align: center;
+            padding: 50px 15px;
+        }
+
+        .container {
+            background-color: white;
+            max-width: 400px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #cccccc;
+        }
+
+        h1 {
+            color: #2563eb;
+        }
+
+        label {
+            display: block;
+            margin: 20px 0 10px;
+            font-size: 16px;
+        }
+
+        input {
+            padding: 10px;
+            width: 80%;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 20px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        #result {
+            margin-top: 25px;
+            color: #166534;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>DOB Calculator</h1>
+        <p>Calculate Your Age</p>
+
+        <label for="dob">Enter Your Date of Birth:</label>
+        <input type="date" id="dob">
+
+        <br>
+
+        <button onclick="calculateAge()">Calculate Age</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function calculateAge() {
+            let dobValue = document.getElementById("dob").value;
+            let result = document.getElementById("result");
+
+            if (dobValue === "") {
+                result.innerHTML = "Please select your date of birth!";
+                return;
+            }
+
+            let dob = new Date(dobValue + "T00:00:00");
+            let today = new Date();
+
+            if (dob > today) {
+                result.innerHTML = "Date of birth cannot be in the future!";
+                return;
+            }
+
+            let years = today.getFullYear() - dob.getFullYear();
+            let months = today.getMonth() - dob.getMonth();
+            let days = today.getDate() - dob.getDate();
+
+            if (days < 0) {
+                months--;
+                let previousMonth = new Date(
+                    today.getFullYear(),
+                    today.getMonth(),
+                    0
+                );
+                days += previousMonth.getDate();
+            }
+
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            result.innerHTML =
+                "Your Age is:<br>" +
+                years + " Years, " +
+                months + " Months, " +
+                days + " Days";
+        }
+    </script>
+
+</body>
+  </html>
